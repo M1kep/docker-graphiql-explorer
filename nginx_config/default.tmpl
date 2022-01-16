@@ -1,0 +1,15 @@
+server {
+    listen 80;
+    server_name localhost;
+    server_name_in_redirect off;
+    access_log  /var/log/nginx/access.log;
+    error_log  /var/log/nginx/error.log debug;
+
+    root /www/data;
+
+    location / {}
+    location /graphql {
+        proxy_pass https://${GRAPHQL_ENDPOINT};
+        proxy_set_header ${API_HEADER_NAME} ${API_HEADER_VALUE};
+    }
+}
